@@ -32,7 +32,7 @@ const NavBar = () => {
       </div>
       <div className="flex-none gap-2">
         <div className="form-control">
-          <p>Welcome {isUser.firstName}</p>
+          <p>Welcome {isUser?.firstName}</p>
         </div>
 
         {isUser && (
