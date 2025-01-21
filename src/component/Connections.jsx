@@ -3,10 +3,12 @@ import React, { useEffect } from "react";
 import { BASE_URL } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { addConnections } from "../utils/connectionSlice";
+import { Link } from "react-router-dom";
 
 const Connections = () => {
   const dispatch = useDispatch();
   const connections = useSelector((store) => store.connections.connections);
+
   const fetchConnections = async () => {
     try {
       const res = await axios.get(BASE_URL + "/user/connections", {
@@ -15,7 +17,7 @@ const Connections = () => {
       dispatch(addConnections(res?.data?.data));
     } catch (error) {
       // ERROR
-      console.log("Error in fetching Connections :",connections);
+      console.log("Error in fetching Connections :", connections);
     }
   };
 
@@ -29,40 +31,6 @@ const Connections = () => {
     return <div>Sorry You Don't Have any Connections</div>;
 
   return (
-    // <div>
-    //   <div className="flex justify-center">
-    //     <h1 className="font-bold my-10">Connections</h1>
-    //   </div>
-
-    //   <div className="flex justify-center items-center flex flex-col">
-    //     {connections.map((data) => {
-    //       const { firstName, lastName, photoUrl, about, skills } = data;
-    //       return (
-    //         <div
-    //           key={data._id}
-    //           className="card card-side bg-base-200 shadow-xl w-[50%] h-[200px] my-5 flex "
-    //         >
-    //           <figure>
-    //             <img
-    //               className="w-[100%] h-[100%]"
-    //               src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-    //               alt="Movie"
-    //             />
-    //           </figure>
-    //           <div className="card-body">
-    //             <h2 className="card-title">{firstName + " " + lastName}</h2>
-    //             <p>{about}</p>
-    //             <div className="card-actions justify-end">
-    //               <button className="btn btn-primary">Watch</button>
-    //             </div>
-    //           </div>
-    //         </div>
-    //       );
-    //     })}
-    //   </div>
-    // </div>
-
-    // This is Responsive Version
     <div>
       {/* Page Title */}
       <div className="flex justify-center">
@@ -72,7 +40,7 @@ const Connections = () => {
       {/* Connections Container */}
       <div className="flex flex-col items-center">
         {connections.map((data) => {
-          const { firstName, lastName, photoUrl, about, skills } = data;
+          const { firstName, lastName, photoUrl, about, skills, _id } = data;
           return (
             <div
               key={data._id}
@@ -83,7 +51,7 @@ const Connections = () => {
                 <img
                   className="w-full h-full object-cover"
                   src={
-                    "https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
+                    "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
                   }
                   alt="Profile"
                 />
@@ -96,9 +64,11 @@ const Connections = () => {
                 </h2>
                 <p className="text-sm md:text-base">{about}</p>
                 <div className="card-actions justify-end mt-4 space-x-2">
-                  <button className="btn btn-primary btn-sm md:btn-md">
-                    Watch
-                  </button>
+                  <Link to={"/chat/" + _id}>
+                    <button className="btn btn-primary btn-sm md:btn-md">
+                      Chat
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>

@@ -8,8 +8,9 @@ import { useNavigate } from "react-router-dom";
 const Login = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("raghu@gmail.com");
+  const [password, setPassword] = useState("Raghu@001");
+  const [profilePicture, setProfilePicture] = useState(null);
   const [error, setError] = useState("");
   const [isLogin, setIsLogin] = useState(true);
   const dispatch = useDispatch();
@@ -33,7 +34,12 @@ const Login = () => {
 
   const handleSignup = async () => {
     try {
-      const data = { firstName, lastName, emailId: email, password };
+      const data = {
+        firstName,
+        lastName,
+        emailId: email,
+        password,
+      };
       console.log("Data is :", data);
       const res = await axios.post(BASE_URL + "/signup", data, {
         withCredentials: true,
@@ -48,7 +54,6 @@ const Login = () => {
   };
 
   return (
-
     // This is Responsive Version
     <div className="flex justify-center px-4">
       {/* Card Container */}
@@ -117,6 +122,15 @@ const Login = () => {
               className="input input-bordered w-full"
             />
           </label>
+          {!isLogin && (
+            <input
+              type="file"
+              className="file-input mt-4 file-input-bordered file-input-success w-full max-w-xs"
+              onChange={(e) => {
+                setProfilePicture(e.target.files[0]);
+              }}
+            />
+          )}
 
           {/* Error Message */}
           {error && <p className="text-red-500 text-sm mt-2">{error}</p>}

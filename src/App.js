@@ -8,6 +8,8 @@ import Profile from "./component/Profile";
 import EditProfile from "./component/EditProfile";
 import Connections from "./component/Connections";
 import Requests from "./component/Requests";
+import Chat from "./component/Chat";
+import Premium from "./component/Premium";
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
               <Route path="/profile" element={<Profile />}></Route>
               <Route path="/connections" element={<Connections />}></Route>
               <Route path="/requests" element={<Requests />}></Route>
+              <Route path="/chat/:targetUserId" element={<Chat />}></Route>
+              <Route path="/premium" element={<Premium />}></Route>
             </Route>
             <Route path="/login" element={<Login />}></Route>
           </Routes>
