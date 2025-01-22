@@ -12,7 +12,7 @@ const EditProfile = ({ user }) => {
   const [age, setAge] = useState(user?.age || "");
   const [gender, setGender] = useState(user?.gender || "");
   const [about, setAbout] = useState(user?.about || "");
-  const [profilePicture, setProfilePicture] = useState(null);
+  const [file, setFile] = useState(null);
   const [error, setError] = useState("");
   const dispatch = useDispatch();
   const [showToast, setShowToast] = useState(false);
@@ -22,23 +22,24 @@ const EditProfile = ({ user }) => {
     setError("");
     try {
       const formData = new FormData();
-
-      // Append fields
       formData.append("firstName", firstName);
       formData.append("lastName", lastName);
-      formData.append("photoUrl", photoUrl);
       formData.append("age", age);
       formData.append("gender", gender);
       formData.append("about", about);
-
-      // Append file
-      if (profilePicture) {
-        formData.append("profilePicture", profilePicture);
+      if (file) {
+        formData.append("file", file); // Add the file to FormData
       }
+      // { firstName, lastName, age, gender, about },
 
-      const res = await axios.patch(BASE_URL + "/profile/edit", formData, {
-        withCredentials: true,
-      });
+      const res = await axios.patch(
+        BASE_URL + "/profile/edit",
+        formData,
+        {
+          withCredentials: true,
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
       dispatch(addUser(res?.data?.data));
       setShowToast(true);
       setTimeout(() => {
@@ -46,12 +47,11 @@ const EditProfile = ({ user }) => {
       }, 3000);
     } catch (err) {
       console.log("Error is :", err);
-      setError(err.response.data);
+      setError(err?.response?.data);
     }
   };
 
   return (
-    // Responsive version
     <>
       <div className="flex flex-col md:flex-row justify-center items-start my-10 gap-10">
         {/* Form Section */}
@@ -135,10 +135,9 @@ const EditProfile = ({ user }) => {
                   </div>
                   <input
                     type="file"
+                    name="file"
+                    onChange={(e) => setFile(e.target.files[0])}
                     className="file-input mt-4 file-input-bordered file-input-success w-full max-w-xs"
-                    onChange={(e) => {
-                      setProfilePicture(e.target.files[0]);
-                    }}
                   />
                 </label>
               </div>

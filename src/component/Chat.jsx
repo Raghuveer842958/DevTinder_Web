@@ -21,7 +21,8 @@ const Chat = () => {
 
     socket.on("messageRecived", ({ firstName, text }) => {
       console.log(firstName + " : " + text);
-      setMessages((msg) => msg.push({ firstName, text }));
+      // setMessages((msg) => msg.push({ firstName, text }));
+      setMessages((msg) => [...msg, { firstName, text }]);
     });
 
     return () => {
@@ -59,6 +60,7 @@ const Chat = () => {
           <input
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
+            // onChange={}
             className="flex-1 border border-gray-500  rounded p-2"
           ></input>
           <button onClick={sendMessage} className="btn btn-secondary">

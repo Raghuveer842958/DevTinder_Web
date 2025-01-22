@@ -36,13 +36,11 @@ const UserCard = ({ user }) => {
         {/* https://img.icons8.com/?size=96&id=98A4yZTt9abw&format=png */}
         <div className="flex">
           <h2 className="card-title">{firstName + " " + lastName}</h2>
-          {isPremium && (
-            <img
-              className="h-10 w-10 ml-1"
-              src="https://img.icons8.com/?size=96&id=98A4yZTt9abw&format=png"
-              alt="premium-memger"
-            ></img>
-          )}
+          <img
+            className="h-10 w-10 ml-1"
+            src="https://img.icons8.com/?size=96&id=98A4yZTt9abw&format=png"
+            alt="premium-memger"
+          ></img>
         </div>
         {age && gender && <p>{age + ", " + gender}</p>}
         <p>{about}</p>
