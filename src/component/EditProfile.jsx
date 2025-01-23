@@ -32,14 +32,10 @@ const EditProfile = ({ user }) => {
       }
       // { firstName, lastName, age, gender, about },
 
-      const res = await axios.patch(
-        BASE_URL + "/profile/edit",
-        formData,
-        {
-          withCredentials: true,
-          headers: { "Content-Type": "multipart/form-data" },
-        }
-      );
+      const res = await axios.patch(BASE_URL + "/profile/edit", formData, {
+        withCredentials: true,
+        headers: { "Content-Type": "multipart/form-data" },
+      });
       dispatch(addUser(res?.data?.data));
       setShowToast(true);
       setTimeout(() => {
@@ -84,6 +80,55 @@ const EditProfile = ({ user }) => {
                     onChange={(e) => setLastName(e.target.value)}
                   />
                 </label>
+
+                {/*  dropdown */}
+                <div className="dropdown w-[100%]">
+                  <div tabIndex={0} role="button" className="btn m-1">
+                    Click
+                  </div>
+                  <ul
+                    tabIndex={0}
+                    className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
+                  >
+                    <li>
+                      <a>JavaScript</a>
+                    </li>
+                    <li>
+                      <a>React.js</a>
+                    </li>
+                    <li>
+                      <a>Node.js</a>
+                    </li>
+                    <li>
+                      <a>Express.js</a>
+                    </li>
+                    <li>
+                      <a>MongoDB</a>
+                    </li>
+                    <li>
+                      <a>Mongoose</a>
+                    </li>
+                    <li>
+                      <a>HTML</a>
+                    </li>
+                    <li>
+                      <a>CSS</a>
+                    </li>
+                    <li>
+                      <a>Tailwind</a>
+                    </li>
+                    <li>
+                      <a>Firebase</a>
+                    </li>
+                    <li>
+                      <a>C++</a>
+                    </li>
+                    <li>
+                      <a>C</a>
+                    </li>
+                  </ul>
+                </div>
+
                 <label className="form-control w-full my-2">
                   <div className="label">
                     <span className="label-text">Photo URL:</span>

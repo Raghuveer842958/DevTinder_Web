@@ -1,6 +1,6 @@
 import axios from "axios";
 import React from "react";
-import { BASE_URL } from "../utils/constants";
+import { BASE_URL, PROFILE_URL } from "../utils/constants";
 import { removeFeed } from "../utils/feedSlice";
 import { useDispatch } from "react-redux";
 
@@ -24,7 +24,7 @@ const EditUserCard = ({ user }) => {
     <div className="card bg-base-300 w-96 shadow-xl my-5">
       <figure>
         <img
-          src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
+          src={PROFILE_URL}
           alt="photo"
         />
       </figure>

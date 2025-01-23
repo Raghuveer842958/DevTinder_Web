@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect } from "react";
-import { BASE_URL } from "../utils/constants";
+import { BASE_URL, PROFILE_URL } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { addRequests } from "../utils/requestSlice";
 
@@ -38,51 +38,6 @@ const Requests = () => {
   if (requests.length === 0) return <div>You Don't Have any Requests</div>;
 
   return (
-    // <div>
-    //   <div className="flex justify-center">
-    //     <h1 className="font-bold my-10">Requests</h1>
-    //   </div>
-
-    //   <div className="flex justify-center items-center flex flex-col">
-    //     {requests.map((data) => {
-    //       const { firstName, lastName, photoUrl, about, skills } =
-    //         data.fromUserId;
-    //       return (
-    //         <div
-    //           key={data._id}
-    //           className="card card-side bg-base-200 shadow-xl w-[50%] h-[200px] my-5"
-    //         >
-    //           <figure>
-    //             <img
-    //               className="w-[100%] h-[100%]"
-    //               src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-    //               alt="Movie"
-    //             />
-    //           </figure>
-    //           <div className="card-body">
-    //             <h2 className="card-title">{firstName + " " + lastName}</h2>
-    //             <p>{about}</p>
-    //             <div className="card-actions justify-end">
-    //               <button
-    //                 onClick={() => reviewRequest("accepted", data._id)}
-    //                 className="btn btn-primary"
-    //               >
-    //                 Accept
-    //               </button>
-    //               <button
-    //                 onClick={() => reviewRequest("rejected", data._id)}
-    //                 className="btn btn-primary"
-    //               >
-    //                 Reject
-    //               </button>
-    //             </div>
-    //           </div>
-    //         </div>
-    //       );
-    //     })}
-    //   </div>
-    // </div>
-
     // This is Responsive Version
     <div>
       {/* Page Title */}
@@ -105,9 +60,7 @@ const Requests = () => {
               <figure className="w-full md:w-1/2 h-60 md:h-72">
                 <img
                   className="w-full h-full object-cover"
-                  src={
-                    "https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-                  }
+                  src={PROFILE_URL}
                   alt="Profile"
                 />
               </figure>
