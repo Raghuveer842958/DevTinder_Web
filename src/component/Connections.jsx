@@ -7,7 +7,8 @@ import { Link } from "react-router-dom";
 
 const Connections = () => {
   const dispatch = useDispatch();
-  const connections = useSelector((store) => store.connections.connections);
+  const connections = useSelector((store) => store?.connections?.connections);
+  // const curr_user = useSelector((store) => store?.user?.user);
 
   const fetchConnections = async () => {
     try {
@@ -40,7 +41,7 @@ const Connections = () => {
       {/* Connections Container */}
       <div className="flex flex-col items-center">
         {connections.map((data) => {
-          const { firstName, lastName, photoUrl, about, skills, _id } = data;
+          const { firstName, lastName, about, skills, _id, isPremium } = data;
           return (
             <div
               key={data._id}
@@ -59,9 +60,17 @@ const Connections = () => {
 
               {/* Card Body */}
               <div className="card-body p-4">
-                <h2 className="card-title text-lg md:text-xl">
-                  {firstName + " " + lastName}
-                </h2>
+                <div className="flex">
+                  <h2 className="card-title">{firstName + " " + lastName}</h2>
+                  {isPremium && (
+                    <img
+                      className="h-8 w-8 ml-1"
+                      src="https://img.icons8.com/?size=96&id=98A4yZTt9abw&format=png"
+                      alt="premium-memger"
+                    ></img>
+                  )}
+                </div>
+                <p className="break-words">{skills.join(" ")}</p>
                 <p className="text-sm md:text-base">{about}</p>
                 <div className="card-actions justify-end mt-4 space-x-2">
                   <Link to={"/chat/" + _id}>

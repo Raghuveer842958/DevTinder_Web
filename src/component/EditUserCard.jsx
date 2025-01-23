@@ -2,11 +2,13 @@ import axios from "axios";
 import React from "react";
 import { BASE_URL, PROFILE_URL } from "../utils/constants";
 import { removeFeed } from "../utils/feedSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const EditUserCard = ({ user }) => {
   const dispatch = useDispatch();
-  const { _id, firstName, lastName, photoUrl, age, gender, about } = user;
+  const curr_user = useSelector((store) => store?.user?.user);
+  const { _id, firstName, lastName, photoUrl, age, gender, about, userSkills } =
+    user;
   const handleSendRequest = async (stauts, _id) => {
     try {
       const res = await axios.post(
@@ -17,24 +19,45 @@ const EditUserCard = ({ user }) => {
       dispatch(removeFeed(_id));
     } catch (error) {
       // Error Logic
-      console.log("Error in handling the send Request :",error);
+      console.log("Error in handling the send Request :", error);
     }
   };
   return (
     <div className="card bg-base-300 w-96 shadow-xl my-5">
       <figure>
-        <img
-          src={PROFILE_URL}
-          alt="photo"
-        />
+        <img src={PROFILE_URL} alt="photo" />
       </figure>
       <div className="card-body">
-        <h2 className="card-title">{firstName + " " + lastName}</h2>
+        <div className="flex">
+          <h2 className="card-title">{firstName + " " + lastName}</h2>
+          {curr_user?.isPremium && (
+            <img
+              className="h-8 w-8 ml-1"
+              src="https://img.icons8.com/?size=96&id=98A4yZTt9abw&format=png"
+              alt="premium-memger"
+            ></img>
+          )}
+        </div>
         {age && gender && <p>{age + ", " + gender}</p>}
+        <p>{userSkills.join(" ")}</p>
         <p>{about}</p>
       </div>
     </div>
   );
 };
 
-export default EditUserCard
+{
+  /* <div className="card-body">
+        <div className="flex">
+          <h2 className="card-title">{firstName + " " + lastName}</h2>
+          {isPremium && (
+            <img
+              className="h-10 w-10 ml-1"
+              src="https://img.icons8.com/?size=96&id=98A4yZTt9abw&format=png"
+              alt="premium-memger"
+            ></img>
+          )}
+        </div> */
+}
+
+export default EditUserCard;

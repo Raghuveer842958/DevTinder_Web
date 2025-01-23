@@ -122,7 +122,8 @@ const Login = () => {
               className="input input-bordered w-full"
             />
           </label>
-          {!isLogin && (
+
+          {/* {!isLogin && (
             <input
               type="file"
               className="file-input mt-4 file-input-bordered file-input-success w-full max-w-xs"
@@ -130,12 +131,11 @@ const Login = () => {
                 setProfilePicture(e.target.files[0]);
               }}
             />
-          )}
+          )} */}
 
           {/* Error Message */}
           {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
 
-          {/* Action Buttons */}
           <div className="card-actions justify-end mt-4">
             <button
               onClick={isLogin ? handleLogin : handleSignup}
@@ -144,7 +144,7 @@ const Login = () => {
               {isLogin ? "Login" : "Signup"}
             </button>
           </div>
-          
+
           {/* Toggle Between Login and Signup */}
           <p
             onClick={() => setIsLogin((prev) => !prev)}

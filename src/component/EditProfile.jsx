@@ -12,10 +12,36 @@ const EditProfile = ({ user }) => {
   const [age, setAge] = useState(user?.age || "");
   const [gender, setGender] = useState(user?.gender || "");
   const [about, setAbout] = useState(user?.about || "");
+  const [showToast, setShowToast] = useState(false);
+  const isPremium=user?.isPremium;
   const [file, setFile] = useState(null);
   const [error, setError] = useState("");
   const dispatch = useDispatch();
-  const [showToast, setShowToast] = useState(false);
+  console.log("user skills is :", user?.skills);
+
+  const [userSkills, setUserSkills] = useState(
+    user?.skills?.length === 0 ? [] : user?.skills[0].split(",")
+  );
+
+  // user?.skill.length===0?[]:user?.skills[0].split(",")
+  // user?.skills ? user?.skills[0].split(",") : []
+
+  const [skills, setSkills] = useState([
+    "javaScript",
+    "React.js",
+    "Node.js",
+    "Express.js",
+    "MongoDB",
+    "HTML",
+    "CSS",
+    "Tailwind",
+    "Firebase",
+    "C++",
+    "C",
+    "DSA",
+    "Python",
+    "Java",
+  ]);
 
   const saveProfile = async () => {
     //Clear Errors
@@ -27,6 +53,8 @@ const EditProfile = ({ user }) => {
       formData.append("age", age);
       formData.append("gender", gender);
       formData.append("about", about);
+      formData.append("skills", userSkills);
+      // userSkills
       if (file) {
         formData.append("file", file); // Add the file to FormData
       }
@@ -46,6 +74,21 @@ const EditProfile = ({ user }) => {
       setError(err?.response?.data);
     }
   };
+
+  const handleSkill = (skill) => {
+    console.log("Skill is :", skill);
+    setUserSkills((prev) => [...prev, skill]);
+    const newSkill = skills.filter((currSkill) => {
+      if (currSkill !== skill) {
+        return currSkill;
+      }
+    });
+
+    setSkills(newSkill);
+  };
+
+  console.log("Skills array:", skills);
+  console.log("User skills array:", userSkills);
 
   return (
     <>
@@ -82,50 +125,22 @@ const EditProfile = ({ user }) => {
                 </label>
 
                 {/*  dropdown */}
-                <div className="dropdown w-[100%]">
+                <div className="dropdown">
                   <div tabIndex={0} role="button" className="btn m-1">
-                    Click
+                    Skills
                   </div>
                   <ul
                     tabIndex={0}
                     className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
                   >
-                    <li>
-                      <a>JavaScript</a>
-                    </li>
-                    <li>
-                      <a>React.js</a>
-                    </li>
-                    <li>
-                      <a>Node.js</a>
-                    </li>
-                    <li>
-                      <a>Express.js</a>
-                    </li>
-                    <li>
-                      <a>MongoDB</a>
-                    </li>
-                    <li>
-                      <a>Mongoose</a>
-                    </li>
-                    <li>
-                      <a>HTML</a>
-                    </li>
-                    <li>
-                      <a>CSS</a>
-                    </li>
-                    <li>
-                      <a>Tailwind</a>
-                    </li>
-                    <li>
-                      <a>Firebase</a>
-                    </li>
-                    <li>
-                      <a>C++</a>
-                    </li>
-                    <li>
-                      <a>C</a>
-                    </li>
+
+                    {skills
+                      .filter((skill) => !userSkills.includes(skill))
+                      .map((skill) => (
+                        <li key={skill} onClick={() => handleSkill(skill)}>
+                          <p>{skill}</p>
+                        </li>
+                      ))}
                   </ul>
                 </div>
 
@@ -174,7 +189,8 @@ const EditProfile = ({ user }) => {
                   />
                 </label>
 
-                <label className="form-control w-full my-2">
+                {/* file field */}
+                {/* <label className="form-control w-full my-2">
                   <div className="label">
                     <span className="label-text">About:</span>
                   </div>
@@ -184,7 +200,8 @@ const EditProfile = ({ user }) => {
                     onChange={(e) => setFile(e.target.files[0])}
                     className="file-input mt-4 file-input-bordered file-input-success w-full max-w-xs"
                   />
-                </label>
+                </label> */}
+
               </div>
               {error && <p className="text-red-500">{error}</p>}
               <div className="card-actions justify-center mt-4">
@@ -199,10 +216,17 @@ const EditProfile = ({ user }) => {
           </div>
         </div>
 
-        {/* UserCard Section */}
         <div className="w-full max-w-md ">
           <EditUserCard
-            user={{ firstName, lastName, photoUrl, age, gender, about }}
+            user={{
+              firstName,
+              lastName,
+              photoUrl,
+              age,
+              gender,
+              about,
+              userSkills,
+            }}
           />
         </div>
       </div>

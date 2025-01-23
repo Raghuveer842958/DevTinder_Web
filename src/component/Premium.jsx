@@ -27,12 +27,12 @@ const Premium = () => {
 
       const options = {
         key: keyId, // Enter the Key ID generated from the Dashboard
-        amount: amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+        amount: amount, 
         currency: "INR",
         name: "DevTinder", //your business name
         description: "Test Transaction",
         image: "https://example.com/your_logo",
-        order_id: orderId, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+        order_id: orderId,
         // callback_url: "https://eneqd3r9zrjok.x.pipedream.net/",
         prefill: {
           //We recommend using the prefill parameter to auto-fill customer's contact information especially their phone number
@@ -132,8 +132,6 @@ const Premium = () => {
           <div className="card bg-base-300 rounded-box grid h-80 flex-grow place-items-center">
             <h1 className="font-bold text-3xl">Silver Membership</h1>
             <ul>
-              <li> - Chat with other people</li>
-              <li> - 100 connection Requests per day</li>
               <li> - Blue Tick</li>
               <li> - 3 months</li>
             </ul>
@@ -148,8 +146,6 @@ const Premium = () => {
           <div className="card bg-base-300 rounded-box grid h-80 flex-grow place-items-center">
             <h1 className="font-bold text-3xl">Gold Membership</h1>
             <ul>
-              <li> - Chat with other people</li>
-              <li> - Inifiniye connection Requests per day</li>
               <li> - Blue Tick</li>
               <li> - 6 months</li>
             </ul>

@@ -11,11 +11,12 @@ const feedSlice = createSlice({
     },
 
     removeFeed: (state, action) => {
-      const currFeed=JSON.parse(JSON.stringify(state.feed));
-      const newFeed=currFeed?.filter((d)=>d._id!==action.payload);
+      console.log("Feed Handler called");
+      const currFeed = JSON.parse(JSON.stringify(state.feed));
+      const newFeed = currFeed?.filter((d) => d._id !== action.payload);
       // console.log("Curr Feed is :", currFeed);
       // console.log("New Feed is :",newFeed);
-      state.feed=newFeed;
+      state.feed = newFeed;
     },
 
     // removeFeed: (state, action) => {
@@ -25,7 +26,6 @@ const feedSlice = createSlice({
     //   // Ensure the structure of state.feed remains consistent
     //   state.feed = { ...state.feed, data: newFeed };
     // },
-    
   },
 });
 
