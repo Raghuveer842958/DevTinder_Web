@@ -40,7 +40,7 @@ const UserCard = ({ user }) => {
           )}
         </div>
         {age && gender && <p>{age + ", " + gender}</p>}
-        <p className="break-words">{skills.join(" ")}</p>
+        {/* <p className="break-words">{skills?.join(" ")}</p> */}
         <p>{about}</p>
         <div className="card-actions justify-center my-4">
           <button
