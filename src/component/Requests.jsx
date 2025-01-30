@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { BASE_URL, PROFILE_URL } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { addRequests, removeRequests } from "../utils/requestSlice";
+import Loading from "./Loading";
 
 const Requests = () => {
   const dispatch = useDispatch();
@@ -42,18 +43,8 @@ const Requests = () => {
     }
   };
 
-  if (!requests) {
-    return (
-      <div className="flex justify-center items-center pt-40 pb-40">
-        <div>
-          <span className="loading loading-spinner loading-xs"></span>
-          <span className="loading loading-spinner loading-sm"></span>
-          <span className="loading loading-spinner loading-md"></span>
-          <span className="loading loading-spinner loading-lg"></span>
-        </div>
-      </div>
-    );
-  }
+  if (!requests) return <Loading />;
+  
   if (requests.length === 0) return <div>You Don't Have any Requests</div>;
 
   return (
@@ -64,7 +55,7 @@ const Requests = () => {
 
       <div className="flex flex-col items-center">
         {requests.map((data) => {
-          const { firstName, lastName, about, skills, _id,isPremium } =
+          const { firstName, lastName, about, skills, _id, isPremium } =
             data.fromUserId;
           return (
             <div

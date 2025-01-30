@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { BASE_URL } from "../utils/constants";
 import { addFeed } from "../utils/feedSlice";
 import UserCard from "./UserCard";
+import Loading from "./Loading";
 
 const Feed = () => {
   const dispatch = useDispatch();
@@ -26,6 +27,8 @@ const Feed = () => {
   useEffect(() => {
     getFeed();
   }, []);
+
+  if (!feed) return <Loading />;
 
   return (
     <div className="flex flex-col  items-center">
