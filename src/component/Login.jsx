@@ -10,27 +10,13 @@ const Login = () => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [profilePicture, setProfilePicture] = useState(null);
   const [error, setError] = useState("");
   const [isLogin, setIsLogin] = useState(true);
+  const [otp, setOtp] = useState("");
+  const [showOtpField, setShowOtpField] = useState(false);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const handleLogin = async () => {
-    try {
-      const url = BASE_URL + "/login";
-      const data = { emailId: email, password };
-      const res = await axios.post(url, data, { withCredentials: true });
-      // console.log("Login Response is :", res);
-      if (res.status === 200) {
-        dispatch(addUser(res.data));
-        navigate("/");
-      }
-    } catch (error) {
-      setError(error.response.data);
-      console.log("Error in Handle Login :", error);
-    }
-  };
 
   const handleSignup = async () => {
     try {
@@ -40,16 +26,48 @@ const Login = () => {
         emailId: email,
         password,
       };
-      console.log("Data is :", data);
+      // console.log("Data is :", data);
       const res = await axios.post(BASE_URL + "/signup", data, {
         withCredentials: true,
       });
+      console.log("Sign Response is :", res);
       dispatch(addUser(res.data));
-      navigate("/");
-      // console.log("Sign Response is :", res);
+      setShowOtpField(true);
+      // navigate("/");
     } catch (error) {
       //ERROR Logic
       console.log("Error in handle Signup :", error);
+    }
+  };
+
+  const handleLogin = async () => {
+    try {
+      const url = BASE_URL + "/login";
+      const data = { emailId: email, password };
+      const res = await axios.post(url, data, { withCredentials: true });
+      console.log("Login Response is :", res);
+      if (res.status === 200) {
+        dispatch(addUser(res.data));
+        setShowOtpField(true);
+      }
+    } catch (error) {
+      setError(error.response?.data);
+      console.log("Error in Handle Login :", error);
+    }
+  };
+
+  const handleOtp = async () => {
+    try {
+      const res = await axios.post(
+        BASE_URL + "/verify-otp",
+        { emailId: email, otp },
+        { withCredentials: true }
+      );
+
+      console.log("OTP response is :", res);
+      navigate("/");
+    } catch (error) {
+      console.log("Error in verifing the OTP");
     }
   };
 
@@ -65,7 +83,7 @@ const Login = () => {
           </h1>
 
           {/* Signup Fields */}
-          {!isLogin && (
+          {!isLogin && !showOtpField && (
             <>
               <label className="form-control w-full">
                 <div className="label">
@@ -95,63 +113,89 @@ const Login = () => {
             </>
           )}
 
-          {/* Email Field */}
-          <label className="form-control w-full mt-4">
-            <div className="label">
-              <span className="text-sm md:text-base">Email Id</span>
-            </div>
-            <input
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              type="text"
-              placeholder="Enter Email"
-              className="input input-bordered w-full"
-            />
-          </label>
+          {!showOtpField && (
+            <>
+              {/* Email Field */}
+              <label className="form-control w-full mt-4">
+                <div className="label">
+                  <span className="text-sm md:text-base">Email Id</span>
+                </div>
+                <input
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  type="text"
+                  placeholder="Enter Email"
+                  className="input input-bordered w-full"
+                />
+              </label>
 
-          {/* Password Field */}
-          <label className="form-control w-full mt-4">
-            <div className="label">
-              <span className="text-sm md:text-base">Password</span>
-            </div>
-            <input
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              type="password"
-              placeholder="Enter Password"
-              className="input input-bordered w-full"
-            />
-          </label>
+              {/* Password Field */}
+              <label className="form-control w-full mt-4">
+                <div className="label">
+                  <span className="text-sm md:text-base">Password</span>
+                </div>
+                <input
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  type="password"
+                  placeholder="Enter Password"
+                  className="input input-bordered w-full"
+                />
+              </label>
+            </>
+          )}
 
-          {/* {!isLogin && (
-            <input
-              type="file"
-              className="file-input mt-4 file-input-bordered file-input-success w-full max-w-xs"
-              onChange={(e) => {
-                setProfilePicture(e.target.files[0]);
-              }}
-            />
-          )} */}
+          {showOtpField && (
+            //  otp Field
+            <label className="form-control w-full mt-4">
+              <div className="label">
+                <span className="text-sm md:text-base">Email Id</span>
+              </div>
+              <input
+                onChange={(e) => setOtp(e.target.value)}
+                type="text"
+                placeholder="Enter OTP"
+                className="input input-bordered w-full"
+              />
+            </label>
+          )}
 
           {/* Error Message */}
           {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
 
-          <div className="card-actions justify-end mt-4">
-            <button
-              onClick={isLogin ? handleLogin : handleSignup}
-              className="btn btn-primary w-full md:w-auto"
-            >
-              {isLogin ? "Login" : "Signup"}
-            </button>
-          </div>
+          {!showOtpField && (
+            <>
+              <div className="card-actions justify-center mt-4">
+                <button
+                  onClick={isLogin ? handleLogin : handleSignup}
+                  className="btn btn-primary w-full md:w-auto"
+                >
+                  {isLogin ? "Login" : "Signup"}
+                </button>
+              </div>
 
-          {/* Toggle Between Login and Signup */}
-          <p
-            onClick={() => setIsLogin((prev) => !prev)}
-            className="flex justify-center cursor-pointer mt-4 text-sm md:text-base"
-          >
-            {isLogin ? "New User? Signup Here" : "Existing User? Login Here"}
-          </p>
+              {/* Toggle Between Login and Signup */}
+              <p
+                onClick={() => setIsLogin((prev) => !prev)}
+                className="flex justify-center cursor-pointer mt-4 text-sm md:text-base"
+              >
+                {isLogin
+                  ? "New User? Signup Here"
+                  : "Existing User? Login Here"}
+              </p>
+            </>
+          )}
+
+          {showOtpField && (
+            <div className="card-actions justify-center mt-4">
+              <button
+                className="btn btn-primary w-full md:w-auto"
+                onClick={handleOtp}
+              >
+                Verify OTP
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>
@@ -159,3 +203,7 @@ const Login = () => {
 };
 
 export default Login;
+
+// cloudinary
+// hoisting
+// google signup

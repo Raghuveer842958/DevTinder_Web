@@ -1,6 +1,6 @@
 import axios from "axios";
 import React from "react";
-import { BASE_URL, PROFILE_URL } from "../utils/constants";
+import { BASE_URL, BLUE_TICK_URL, PROFILE_URL } from "../utils/constants";
 import { removeFeed } from "../utils/feedSlice";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -8,7 +8,7 @@ const EditUserCard = ({ user }) => {
   const dispatch = useDispatch();
   const curr_user = useSelector((store) => store?.user?.user);
   const { _id, firstName, lastName, photoUrl, age, gender, about, userSkills } =
-    user;
+  curr_user;
   const handleSendRequest = async (stauts, _id) => {
     try {
       const res = await axios.post(
@@ -25,7 +25,7 @@ const EditUserCard = ({ user }) => {
   return (
     <div className="card bg-base-300 w-96 shadow-xl my-5">
       <figure>
-        <img src={PROFILE_URL} alt="photo" />
+        <img src={photoUrl || PROFILE_URL} alt="photo" />
       </figure>
       <div className="card-body">
         <div className="flex">
@@ -33,31 +33,17 @@ const EditUserCard = ({ user }) => {
           {curr_user?.isPremium && (
             <img
               className="h-8 w-8 ml-1"
-              src="https://img.icons8.com/?size=96&id=98A4yZTt9abw&format=png"
+              src={BLUE_TICK_URL}
               alt="premium-memger"
             ></img>
           )}
         </div>
         {age && gender && <p>{age + ", " + gender}</p>}
-        <p>{userSkills.join(" ")}</p>
+        {/* <p>{userSkills.join(" ")}</p> */}
         <p>{about}</p>
       </div>
     </div>
   );
 };
-
-{
-  /* <div className="card-body">
-        <div className="flex">
-          <h2 className="card-title">{firstName + " " + lastName}</h2>
-          {isPremium && (
-            <img
-              className="h-10 w-10 ml-1"
-              src="https://img.icons8.com/?size=96&id=98A4yZTt9abw&format=png"
-              alt="premium-memger"
-            ></img>
-          )}
-        </div> */
-}
 
 export default EditUserCard;

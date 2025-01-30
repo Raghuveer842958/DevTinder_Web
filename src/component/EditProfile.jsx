@@ -13,15 +13,15 @@ const EditProfile = ({ user }) => {
   const [gender, setGender] = useState(user?.gender || "");
   const [about, setAbout] = useState(user?.about || "");
   const [showToast, setShowToast] = useState(false);
-  const isPremium=user?.isPremium;
+  const isPremium = user?.isPremium;
   const [file, setFile] = useState(null);
   const [error, setError] = useState("");
   const dispatch = useDispatch();
   console.log("user skills is :", user?.skills);
 
-  const [userSkills, setUserSkills] = useState(
-    user?.skills?.length === 0 ? [] : user?.skills[0].split(",")
-  );
+  // const [userSkills, setUserSkills] = useState(
+  //   user?.skills?.length === 0 ? [] : user?.skills[0].split(",")
+  // );
 
   // user?.skill.length===0?[]:user?.skills[0].split(",")
   // user?.skills ? user?.skills[0].split(",") : []
@@ -53,7 +53,7 @@ const EditProfile = ({ user }) => {
       formData.append("age", age);
       formData.append("gender", gender);
       formData.append("about", about);
-      formData.append("skills", userSkills);
+      // formData.append("skills", userSkills);
       // userSkills
       if (file) {
         formData.append("file", file); // Add the file to FormData
@@ -75,20 +75,20 @@ const EditProfile = ({ user }) => {
     }
   };
 
-  const handleSkill = (skill) => {
-    console.log("Skill is :", skill);
-    setUserSkills((prev) => [...prev, skill]);
-    const newSkill = skills.filter((currSkill) => {
-      if (currSkill !== skill) {
-        return currSkill;
-      }
-    });
+  // const handleSkill = (skill) => {
+  //   console.log("Skill is :", skill);
+  //   setUserSkills((prev) => [...prev, skill]);
+  //   const newSkill = skills.filter((currSkill) => {
+  //     if (currSkill !== skill) {
+  //       return currSkill;
+  //     }
+  //   });
 
-    setSkills(newSkill);
-  };
+  //   setSkills(newSkill);
+  // };
 
   console.log("Skills array:", skills);
-  console.log("User skills array:", userSkills);
+  // console.log("User skills array:", userSkills);
 
   return (
     <>
@@ -125,7 +125,7 @@ const EditProfile = ({ user }) => {
                 </label>
 
                 {/*  dropdown */}
-                <div className="dropdown">
+                {/* <div className="dropdown">
                   <div tabIndex={0} role="button" className="btn m-1">
                     Skills
                   </div>
@@ -133,7 +133,6 @@ const EditProfile = ({ user }) => {
                     tabIndex={0}
                     className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
                   >
-
                     {skills
                       .filter((skill) => !userSkills.includes(skill))
                       .map((skill) => (
@@ -142,7 +141,7 @@ const EditProfile = ({ user }) => {
                         </li>
                       ))}
                   </ul>
-                </div>
+                </div> */}
 
                 <label className="form-control w-full my-2">
                   <div className="label">
@@ -190,7 +189,7 @@ const EditProfile = ({ user }) => {
                 </label>
 
                 {/* file field */}
-                {/* <label className="form-control w-full my-2">
+                <label className="form-control w-full my-2">
                   <div className="label">
                     <span className="label-text">About:</span>
                   </div>
@@ -200,9 +199,9 @@ const EditProfile = ({ user }) => {
                     onChange={(e) => setFile(e.target.files[0])}
                     className="file-input mt-4 file-input-bordered file-input-success w-full max-w-xs"
                   />
-                </label> */}
-
+                </label>
               </div>
+
               {error && <p className="text-red-500">{error}</p>}
               <div className="card-actions justify-center mt-4">
                 <button
@@ -225,7 +224,7 @@ const EditProfile = ({ user }) => {
               age,
               gender,
               about,
-              userSkills,
+              // userSkills,
             }}
           />
         </div>
