@@ -143,17 +143,7 @@ const EditProfile = ({ user }) => {
                   </ul>
                 </div> */}
 
-                <label className="form-control w-full my-2">
-                  <div className="label">
-                    <span className="label-text">Photo URL:</span>
-                  </div>
-                  <input
-                    type="text"
-                    value={photoUrl}
-                    className="input input-bordered w-full"
-                    onChange={(e) => setPhotoUrl(e.target.value)}
-                  />
-                </label>
+
                 <label className="form-control w-full my-2">
                   <div className="label">
                     <span className="label-text">Age:</span>

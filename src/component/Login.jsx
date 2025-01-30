@@ -8,8 +8,8 @@ import { useNavigate } from "react-router-dom";
 const Login = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("coderaghu001@gmail.com");
+  const [password, setPassword] = useState("Raghuveer@001");
   const [error, setError] = useState("");
   const [isLogin, setIsLogin] = useState(true);
   const [otp, setOtp] = useState("");
@@ -17,6 +17,7 @@ const Login = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  let tempUser;
 
   const handleSignup = async () => {
     try {
@@ -31,9 +32,8 @@ const Login = () => {
         withCredentials: true,
       });
       console.log("Sign Response is :", res);
-      dispatch(addUser(res.data));
+      tempUser = res.data;
       setShowOtpField(true);
-      // navigate("/");
     } catch (error) {
       //ERROR Logic
       console.log("Error in handle Signup :", error);
@@ -47,7 +47,7 @@ const Login = () => {
       const res = await axios.post(url, data, { withCredentials: true });
       console.log("Login Response is :", res);
       if (res.status === 200) {
-        dispatch(addUser(res.data));
+        tempUser = res.data;
         setShowOtpField(true);
       }
     } catch (error) {
@@ -64,7 +64,8 @@ const Login = () => {
         { withCredentials: true }
       );
 
-      console.log("OTP response is :", res);
+      // console.log("OTP response is :", res);
+      dispatch(addUser(tempUser));
       navigate("/");
     } catch (error) {
       console.log("Error in verifing the OTP");
@@ -203,7 +204,3 @@ const Login = () => {
 };
 
 export default Login;
-
-// cloudinary
-// hoisting
-// google signup
