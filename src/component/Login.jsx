@@ -34,8 +34,8 @@ const Login = () => {
       if (checkEmailPassword) {
         setError(checkEmailPassword);
         setWarnning(true);
+        return;
       }
-      // console.log("Data is :", data);
       const res = await axios.post(BASE_URL + "/signup", data, {
         withCredentials: true,
       });
@@ -44,7 +44,8 @@ const Login = () => {
       setShowOtpField(true);
     } catch (error) {
       //ERROR Logic
-      setError(error.response?.data);
+      setError(error.response?.data?.message);
+      // console.log("************** :",error.response?.data?.message)
       setWarnning(true);
       console.log("Error in handle Signup :", error);
     }
@@ -79,9 +80,10 @@ const Login = () => {
       dispatch(addUser(tempUser));
       navigate("/");
     } catch (error) {
-      setError(error.response?.data);
+      console.log("*********** :", error?.response?.data?.error);
+      setError(error?.response?.data?.error);
       setWarnning(true);
-      console.log("Error in verifing the OTP");
+      console.log("Error in verifing the OTP :", error);
     }
   };
 
