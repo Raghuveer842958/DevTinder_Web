@@ -34,6 +34,10 @@ const Login = () => {
       if (checkEmailPassword) {
         setError(checkEmailPassword);
         setWarnning(true);
+        setTimeout(() => {
+          console.log("Called Called Called");
+          setWarnning(false);
+        }, 3000);
         return;
       }
       const res = await axios.post(BASE_URL + "/signup", data, {
@@ -44,9 +48,13 @@ const Login = () => {
       setShowOtpField(true);
     } catch (error) {
       //ERROR Logic
-      setError(error.response?.data?.message);
       // console.log("************** :",error.response?.data?.message)
+      setError(error.response?.data?.message);
       setWarnning(true);
+      setTimeout(() => {
+        console.log("Called Called Called");
+        setWarnning(false);
+      }, 3000);
       console.log("Error in handle Signup :", error);
     }
   };
@@ -64,6 +72,10 @@ const Login = () => {
     } catch (error) {
       setError(error.response?.data);
       setWarnning(true);
+      setTimeout(() => {
+        console.log("Called Called Called");
+        setWarnning(false);
+      }, 3000);
       console.log("Error in Handle Login :", error);
     }
   };
@@ -80,15 +92,17 @@ const Login = () => {
       dispatch(addUser(tempUser));
       navigate("/");
     } catch (error) {
-      console.log("*********** :", error?.response?.data?.error);
       setError(error?.response?.data?.error);
       setWarnning(true);
+      setTimeout(() => {
+        console.log("Called Called Called");
+        setWarnning(false);
+      }, 3000);
       console.log("Error in verifing the OTP :", error);
     }
   };
 
   return (
-    // This is Responsive Version
     <div className="flex justify-center px-4">
       {/* Card Container */}
       <div className="card bg-base-200 w-full max-w-md shadow-xl my-10">
