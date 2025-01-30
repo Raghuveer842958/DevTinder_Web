@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 const UserCard = ({ user }) => {
   const dispatch = useDispatch();
 
-  const { _id, firstName, lastName, age, gender, about, isPremium, skills } =
+  const { _id, firstName, lastName, age, gender, about, isPremium, photoUrl } =
     user;
 
   const handleSendRequest = async (stauts, _id) => {
@@ -26,7 +26,7 @@ const UserCard = ({ user }) => {
   return (
     <div className="card bg-base-300 w-96 shadow-xl my-5">
       <figure>
-        <img src={PROFILE_URL} alt="photo" />
+        <img src={photoUrl || PROFILE_URL} alt="photo" />
       </figure>
       <div className="card-body">
         <div className="flex">
