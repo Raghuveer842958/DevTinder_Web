@@ -70,7 +70,7 @@ const Connections = () => {
                     ></img>
                   )}
                 </div>
-                <p className="break-words">{skills.join(" ")}</p>
+                {/* <p className="break-words">{skills?.join(" ")}</p> */}
                 <p className="text-sm md:text-base">{about}</p>
                 <div className="card-actions justify-end mt-4 space-x-2">
                   <Link to={"/chat/" + _id}>

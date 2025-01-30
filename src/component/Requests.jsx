@@ -89,7 +89,7 @@ const Requests = () => {
                     ></img>
                   )}
                 </div>
-                <p className="break-words">{skills.join(" ")}</p>
+                {/* <p className="break-words">{skills?.join(" ")}</p> */}
                 <p className="text-sm md:text-base">{about}</p>
                 <div className="card-actions justify-end space-x-2 mt-4">
                   <button
