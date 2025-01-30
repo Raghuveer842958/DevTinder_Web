@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 import { BASE_URL } from "../utils/constants";
 import { useNavigate } from "react-router-dom";
+import checkValidData from "../utils/validation";
 
 const Login = () => {
   const [firstName, setFirstName] = useState("");
@@ -14,6 +15,7 @@ const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [otp, setOtp] = useState("");
   const [showOtpField, setShowOtpField] = useState(false);
+  const [warnning, setWarnning] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -27,6 +29,12 @@ const Login = () => {
         emailId: email,
         password,
       };
+
+      const checkEmailPassword = checkValidData(email, password);
+      if (checkEmailPassword) {
+        setError(checkEmailPassword);
+        setWarnning(true);
+      }
       // console.log("Data is :", data);
       const res = await axios.post(BASE_URL + "/signup", data, {
         withCredentials: true,
@@ -36,6 +44,8 @@ const Login = () => {
       setShowOtpField(true);
     } catch (error) {
       //ERROR Logic
+      setError(error.response?.data);
+      setWarnning(true);
       console.log("Error in handle Signup :", error);
     }
   };
@@ -52,6 +62,7 @@ const Login = () => {
       }
     } catch (error) {
       setError(error.response?.data);
+      setWarnning(true);
       console.log("Error in Handle Login :", error);
     }
   };
@@ -68,6 +79,8 @@ const Login = () => {
       dispatch(addUser(tempUser));
       navigate("/");
     } catch (error) {
+      setError(error.response?.data);
+      setWarnning(true);
       console.log("Error in verifing the OTP");
     }
   };
@@ -162,7 +175,24 @@ const Login = () => {
           )}
 
           {/* Error Message */}
-          {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+          {warnning && (
+            <div role="alert" className="alert alert-warning">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6 shrink-0 stroke-current"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                />
+              </svg>
+              <span>{error}</span>
+            </div>
+          )}
 
           {!showOtpField && (
             <>
